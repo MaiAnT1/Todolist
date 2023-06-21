@@ -135,7 +135,6 @@ li {
     text-align: center;
     border-radius: 50%;
 }
-
 .new-class::before {
     content: "*";
     color: #c40441;

@@ -188,44 +188,6 @@ function updatedata(dataId, newData) {
   
     return data;
   }
-
-  //list.addEventListener("click", function(e){
-    //if(e.target.classList.contains("confirmBtn") ){
-        //const dataId = e.target.getAttribute("id");
-        
-       // const dataElement = document.getElementById(dataId);
-       // dataElement.innerText = '*' + dataElement.innerText;
-        //console.log(dataElement.innerText);
-       
-       // const newData = {
-       //   isImportant: confirmBtn.checked,
-        //};
-       // updatedata(dataId, newData);
-     // }   
- // });
-
- //list.addEventListener("click", function(e){
- // if(e.target.classList.contains("confirmBtn") ){
-   // const dataId = e.target.parentElement.getAttribute("id");
-    
-    //  fetch(dataApi +'/'+ dataId, {
-     //     method: "PUT",
-     //     headers: {
-     //       "Content-Type": "application/json",
-      //    },
-      //    body: JSON.stringify({
-            
-
-        //    isImportant: true
-       //   }),
-     // })
-     // .then((response) => response.json())
-     // .catch((error) => {
-    //    console.log("Error");
-    //  });
- // }
-//});
-
 list.addEventListener("click", function(e){
   if(e.target.classList.contains("confirmBtn") ){
     const dataId = e.target.parentElement.getAttribute("id");
@@ -235,9 +197,9 @@ list.addEventListener("click", function(e){
     fetch(dataApi +'/'+ dataId, {
     method: "PUT",
     body: JSON.stringify({
-      description: task, // spread existing data
+      description: task, // spread existing data f
       completed: false,
-      isImportant: true // add isImportant property
+      isImportant: true // add isImportant property add
     }),
     headers: {
       "Content-Type": "application/json"
