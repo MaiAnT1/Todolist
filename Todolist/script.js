@@ -4,6 +4,8 @@ const list = document.getElementById("listcontainer");
 console.log(list)
 var dataApi = "http://localhost:3000/todos"
 
+
+
 async function fetchData() {
     let response = await 
     fetch(dataApi);
@@ -33,6 +35,16 @@ async function fetchData() {
         checkbox.checked = data.completed;
         divItem.appendChild(checkbox);
 
+        const sao = document.createElement("button");
+        sao.classList.add("confirmBtn");
+        sao.innerHTML = "*";
+        divItem.appendChild(sao);
+
+        sao.addEventListener("click", function() {
+          divItem.classList.add("new-class");
+        });
+
+
         return divItem;
 
     });
@@ -42,11 +54,11 @@ fetchData();
 
 
 function add() {
-    var description = document.getElementById("inputbox").value;
-    var formData = {
-        description: description
-    }
-    createCourse(formData)
+  var description = document.getElementById("inputbox").value;
+  var formData = {
+      description: description
+  }
+  createCourse(formData)
 }
 
 function createCourse() {
@@ -109,7 +121,7 @@ list.addEventListener("click", function(e){
     }
 });
 
-function updateTask(dataId, newData) {
+function updatedata(dataId, newData) {
     fetch(dataApi + '/' + dataId, {
       method: "PUT",
       headers: {
@@ -130,13 +142,123 @@ function updateTask(dataId, newData) {
       const liElement = e.target.parentElement;
       const inputTask = liElement.querySelector("input[type='text']");
       const newDescription = inputTask.value;
-  
+      const isImportant = liElement.classList.contains("is-important");
       const newData = {
         description: newDescription,
         completed: completed,
+        isImportant: isImportant,
       };
-      updateTask(dataId, newData);
+      updatedata(dataId, newData);
     }
   });
 
+  list.addEventListener("click", function (e) {
+    if (e.target.tagName === "LI") {
+      const oldDescription = e.target.lastElementChild.value;
+      const input = document.createElement("input");
+      input.type = "text";
+      input.value = oldDescription;
+      e.target.innerHTML = "";
+      e.target.appendChild(input);
+  
+      input.addEventListener("keydown", function (event) {
+        if (event.key === "Enter") {
+          const newDescription = event.target.value;
+          const dataId = e.target.getAttribute("id");
+          const completed = e.target.firstChild.checked;
+          const newData = {
+            description: newDescription,
+            completed: completed,
+          };
+  
+          updatedata(dataId, newData);
+        }
+      });
+    }
+  });
+
+  function sortTodos(data) {
+    data.sort((a, b) => {
+      if (a.isImportant && !a.completed) return -1;
+      if (b.isImportant && !b.completed) return 1;
+      if (!a.completed) return -1;
+      if (!b.completed) return 1;
+      return 0;
+    });
+  
+    return data;
+  }
+
+  //list.addEventListener("click", function(e){
+    //if(e.target.classList.contains("confirmBtn") ){
+        //const dataId = e.target.getAttribute("id");
+        
+       // const dataElement = document.getElementById(dataId);
+       // dataElement.innerText = '*' + dataElement.innerText;
+        //console.log(dataElement.innerText);
+       
+       // const newData = {
+       //   isImportant: confirmBtn.checked,
+        //};
+       // updatedata(dataId, newData);
+     // }   
+ // });
+
+ //list.addEventListener("click", function(e){
+ // if(e.target.classList.contains("confirmBtn") ){
+   // const dataId = e.target.parentElement.getAttribute("id");
+    
+    //  fetch(dataApi +'/'+ dataId, {
+     //     method: "PUT",
+     //     headers: {
+     //       "Content-Type": "application/json",
+      //    },
+      //    body: JSON.stringify({
+            
+
+        //    isImportant: true
+       //   }),
+     // })
+     // .then((response) => response.json())
+     // .catch((error) => {
+    //    console.log("Error");
+    //  });
+ // }
+//});
+
+list.addEventListener("click", function(e){
+  if(e.target.classList.contains("confirmBtn") ){
+    const dataId = e.target.parentElement.getAttribute("id");
+    const liElement = e.target.parentElement;
+    const inputTask = liElement.querySelector("input[type='text']");
+    const task = inputTask.value;
+    fetch(dataApi +'/'+ dataId, {
+    method: "PUT",
+    body: JSON.stringify({
+      description: task, // spread existing data
+      completed: false,
+      isImportant: true // add isImportant property
+    }),
+    headers: {
+      "Content-Type": "application/json"
+    }
+    })
+  
+  .then(response => response.json())
+  .then(data => console.log(data))
+  .catch(error => console.error(error));
+  }
+});
+
+
+
+
+
+
+ 
+  
+
+  
+
+  
   

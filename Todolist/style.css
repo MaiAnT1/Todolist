@@ -80,20 +80,63 @@ ul li span{
     border-radius: 50%;
 }
 
-.list-container > .todo-app button {
+.listcontainer > .todo-app button {
     position: absolute;
     right: 0;
     top: 5px;
     width: 40px;
     height: 40px;
     font-size: 22px;
+    color: #8b4343;
+    line-height: 40px;
+    text-align: center;
+    border-radius: 50%;
+}
+ul li.is-important::before {
+    content: "*";
+    margin-right: 5px;
+    color: #f91900;
+  }
+
+input[type="text"]:focus {
+    border: 0.5px solid #419de4;
+    border-radius: 20px;
+    text: none;
+}
+
+li {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+  
+  .completed-checkbox {
+    position: absolute;
+    left:  0;
+    width: 20px;
+    height: 20px;
+    order: 1;
+    margin-left: 10px;
+  }
+  .completed-checkbox:checked + span + input {
+    text-decoration: line-through;
     color: #555;
+  }
+  ul li button{
+    position: absolute;
+    right: 40px;
+    top: 5px;
+    width: 30px;
+    height: 30px;
+    font-size: 22px;
+    color: #ec0e0e;
+    border-color: #dd809d;
     line-height: 40px;
     text-align: center;
     border-radius: 50%;
 }
 
-input[type="text"]:focus {
-    border: 5px solid #1a629a;
-    border-radius: 10px;
+.new-class::before {
+    content: "*";
+    color: #c40441;
   }
